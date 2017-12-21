@@ -1,11 +1,32 @@
 <html>
     <head>
         <title>Test</title>
+        <style>
+            .name {
+                background-color: 'black';
+            }
+        </style>
     </head>
     <body>
         <p>This is the start of the app</p>
-        <my-name click="console.log('ggg')" color="red">Cristina</my-name>
+        <name-box id="name"
+                 click="console.log('ggg')"
+                 open="ceva"
+                 style="color:red;"
+                 class="name"
+                 color="red">Serban</name-box>
+        <button id="button" onclick="openChange();" open="true">Click</button>
+
+        <div id="container"></div>
 
         <script src="build/bundle.js"></script>
+        <script>
+            function openChange()
+            {
+                console.log('element clicked')
+                let el = document.getElementById('name');
+                el.attributes.open.value = 'altceva';
+            }
+        </script>
     </body>
 </html>

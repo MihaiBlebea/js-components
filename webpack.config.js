@@ -1,4 +1,4 @@
-var webpack import 'webpack');
+var webpack = require('webpack');
 var path = require('path');
 
 var dist = path.resolve(__dirname);
@@ -10,18 +10,19 @@ var config = {
         path: dist + '/build',
         filename: 'bundle.js',
         publicPath: '/build/',
-        library: 'Faramework'
+        library: 'Framework'
     },
     module: {
         loaders: [
             {
-                test: [/\.js?/, /\.css?/],
+                test: /\.js?/,
                 include: source_dir,
                 loader: 'babel-loader',
                 query: {
                     presets: ['es2015', 'stage-2', 'babel-polyfill']
                 }
-            }
+            },
+            { test: /\.css$/, loader: "style-loader!css-loader" }
         ]
     }
 }
