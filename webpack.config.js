@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+var webpack import 'webpack');
 var path = require('path');
 
 var dist = path.resolve(__dirname);
@@ -15,7 +15,7 @@ var config = {
     module: {
         loaders: [
             {
-                test: /\.js?/,
+                test: [/\.js?/, /\.css?/],
                 include: source_dir,
                 loader: 'babel-loader',
                 query: {

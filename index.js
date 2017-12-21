@@ -1,4 +1,5 @@
 import WebComponent from 'webcomponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Framework extends WebComponent
 {
@@ -13,7 +14,12 @@ class Framework extends WebComponent
         this.state.content = this.innerContent();
         this.setEvents();
 
-        this.render();
+        this.turnVirtual();
+
+        if(this.state.content !== null)
+        {
+            this.render();
+        }
     }
 
     getAttributes()
@@ -28,9 +34,12 @@ class Framework extends WebComponent
 
     setEvents()
     {
-        this.addEventListener('click', function() {
-            alert(`This should be ${this.state.attributes.color}`);
-        });
+
+    }
+
+    turnVirtual(type, props, ...children)
+    {
+        return { type, props, children };
     }
 
     innerContent()
@@ -41,7 +50,9 @@ class Framework extends WebComponent
     render()
     {
         this.style.color = this.state.attributes.color;
-        this.innerHTML = `<div>${this.innerContent()} Blebea</div>`;
+        this.innerHTML = `<div class="alert alert-primary" role="alert">
+                            This is a primary alert—check it out!
+                          </div>`;
     }
 }
 
