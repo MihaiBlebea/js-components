@@ -17,15 +17,37 @@
                  color="red">Serban</name-box>
         <button id="button" onclick="openChange();" open="true">Click</button>
 
-        <div id="container"></div>
+
+        <ul id="container" disabled>
+            <li>Serban</li>
+            <li>Horia</li>
+            <li>Mircea</li>
+        </ul>
+
+        <hr />
+        <div id="host"></div>
+
+        <hr />
+        <show-list>Florin, Vasile, Nita</show-list>
 
         <script src="build/bundle.js"></script>
         <script>
+            let f = document.getElementById('container');
+            console.log('Get html element', f);
+            let g = Framework.getVElement(f);
+            console.log('parse html element into VDom element', g);
+            let t = Framework.setVElement(g);
+            console.log('put back together Dom element', t);
+
+            let host = document.getElementById('host');
+            Framework.mountComponent(host, t);
+
             function openChange()
             {
                 console.log('element clicked')
                 let el = document.getElementById('name');
                 el.attributes.open.value = 'altceva';
+                el.innerHTML = "Florin";
             }
         </script>
     </body>

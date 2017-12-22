@@ -1,7 +1,7 @@
 import WebComponent from 'webcomponent';
-import * as bootstrap from 'bootstrap/dist/css/bootstrap.min.css';
+import * as vd from '../src/virtualDom.js';
 
-class NameBox extends WebComponent
+class List extends WebComponent
 {
     constructor()
     {
@@ -25,7 +25,7 @@ class NameBox extends WebComponent
     {
         console.log('Element is mounted');
         let root = this.createShadowRoot();
-        root.innerHTML = this.render();
+        root.appendChild(this.render());
     }
 
     static get observedAttributes()
@@ -45,8 +45,19 @@ class NameBox extends WebComponent
 
     render()
     {
-        return (`<div>Numele meu este ${this.innerContent()}</div>`);
+        let el = {
+            type: 'DIV',
+            props: { disable: true, open: true, show: false },
+            children : [
+                {
+                    type: 'STRONG',
+                    props: { reed: true },
+                    children: [ this.innerContent() ]
+                }
+            ]
+        };
+        return vd.setVElement(el);
     }
 }
 
-export default NameBox;
+export default List;
