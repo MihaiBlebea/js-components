@@ -9,6 +9,8 @@
     </head>
     <body>
         <p>This is the start of the app</p>
+        <strong><p>Test 1: Create a shadow DOM custom element</p></strong>
+        <hr />
         <name-box id="name"
                  click="console.log('ggg')"
                  open="ceva"
@@ -17,21 +19,29 @@
                  color="red">Serban</name-box>
         <button id="button" onclick="openChange();" open="true">Click</button>
 
-
-        <ul id="container" disabled>
-            <li>Serban</li>
-            <li>Horia</li>
-            <li>Mircea</li>
-        </ul>
-
+        <strong><p>Test 2: Take a real DOM element and clone it into a Virtual DOM and pass it back</p></strong>
         <hr />
+        <div id='parent'>
+            <ul id="container" disabled>
+                <li onclick="remove(event);">Serban</li>
+                <li onclick="remove(event);">Horia</li>
+                <li onclick="remove(event);" open="true">Mircea</li>
+            </ul>
+        </div>
+
+
         <div id="host"></div>
 
+        <strong><p>Test 3: Create a custom element from a virtual DOM object</p></strong>
         <hr />
         <show-list>Florin, Vasile, Nita</show-list>
 
+        <button onclick="add();">Add element</button>
+
+
         <script src="build/bundle.js"></script>
         <script>
+
             let f = document.getElementById('container');
             console.log('Get html element', f);
             let g = Framework.getVElement(f);
@@ -42,6 +52,73 @@
             let host = document.getElementById('host');
             Framework.mountComponent(host, t);
 
+            let parent = document.getElementById('container');
+            function add()
+            {
+                let newEl = {
+                    type: 'LI',
+                    props: {},
+                    children: [ 'Roman' ]
+                };
+                Framework.updateElement(parent, newEl, );
+            }
+
+            function remove(event)
+            {
+                let index = event.target;
+                let oldEl = Framework.getVElement(index);
+                Framework.updateElement(parent, null, oldEl);
+            }
+
+            let newParent = document.getElementById('parent');
+            function change()
+            {
+                let oldEl = {
+                    type: 'UL',
+                    props: { id: "container", disabled: undefined },
+                    children: [
+                        {
+                            type: 'LI',
+                            props: { onclick: "remove(event);" },
+                            children: ['Serban']
+                        },
+                        {
+                            type: 'LI',
+                            props: { onclick: "remove(event);" },
+                            children: ['Horia']
+                        },
+                        {
+                            type: 'LI',
+                            props: { onclick: "remove(event);", open: 'true' },
+                            children: ['Mircea']
+                        }
+                    ]
+                };
+
+                let newEl = {
+                    type: 'UL',
+                    props: { id: "container", disabled: undefined },
+                    children: [
+                        {
+                            type: 'LI',
+                            props: {},
+                            children: ['ddd']
+                        },
+                        {
+                            type: 'LI',
+                            props: { onclick: "remove(event);", style: "color:red;" },
+                            children: ['Horia']
+                        },
+                        {
+                            type: 'LI',
+                            props: { onclick: "remove(event);", open: 'false', 'f-mouseover': 'sting(event)'},
+                            children: ['Mircea']
+                        }
+                    ]
+                };
+                Framework.updateElement(newParent, newEl, oldEl)
+            }
+            let p = parent.children[0];
             function openChange()
             {
                 console.log('element clicked')
